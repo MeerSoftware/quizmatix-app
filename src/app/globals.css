@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+
+body, html {
+    width: 100vw;
+    height: 100vh;
+}
+
+.data-\[loaded\=false\]\:skeleton, .skeleton {
+    animation-duration: 2s !important;
+}

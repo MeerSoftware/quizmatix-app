@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.meersoftware.quizmatix" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Quizmatix</name>
+    <description>Türkiye'nin çevrim içi bilgi yarışması!</description>
+    <author email="info@quizmatix.com" href="https://quizmatix.com">
+        meerSoftware
+    </author>
+    <content src="index.html" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+</widget>
