@@ -21,23 +21,25 @@ declare global {
 }
 
 export default function Game() {
-    const [loaded, setLoaded] = useState<boolean>(false);
-    const [currentPage, setCurrentPage] = useState(PageConst.GAME_PAGE);
-    const [rooms, setRooms] = useState([]);
-    const [inRoom, setInRoom] = useState(false);
-    const [gameState, _setGameState] = useState(STARTING_STATE);
-    const [countdown, setCountdown] = useState(15);
-    const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
-    const [messages, setMessages] = useState<DataInterface[]>([]);
-    const [players, setPlayers] = useState<DataInterface[]>([]);
-    const [selectedUser, setSelectedUser] = useState<DataInterface[]>([]);
-    const [currentTab, setCurrentTab] = useState<TabNumber>(TabNumber.CHAT_PAGE);
-    const [notices, setNotices] = useState<string[]>([]);
+    var clientStates: DataInterface = {};
+
+    [clientStates.loaded, clientStates.setLoaded] = useState<boolean>(false);
+    [clientStates.currentPage, clientStates.setCurrentPage] = useState(PageConst.GAME_PAGE);
+    [clientStates.rooms, clientStates.setRooms] = useState([]);
+    [clientStates.inRoom, clientStates.setInRoom] = useState(false);
+    [clientStates.gameState, clientStates._setGameState] = useState(STARTING_STATE);
+    [clientStates.countdown, clientStates.setCountdown] = useState(15);
+    [clientStates.currentQuestion, clientStates.setCurrentQuestion] = useState<Question | null>(null);
+    [clientStates.messages, clientStates.setMessages] = useState<DataInterface[]>([]);
+    [clientStates.players, clientStates.setPlayers] = useState<DataInterface[]>([]);
+    [clientStates.selectedUser, clientStates.setSelectedUser] = useState<DataInterface[]>([]);
+    [clientStates.currentTab, clientStates.setCurrentTab] = useState<TabNumber>(TabNumber.CHAT_PAGE);
+    [clientStates.notices, clientStates.setNotices] = useState<string[]>([]);
 
     useEffect(() => {
         const client: Client = createInstance(
             Client,
-            {loaded, setLoaded, rooms, setRooms, inRoom, setInRoom, gameState, _setGameState, countdown, setCountdown, currentQuestion, setCurrentQuestion, messages, setMessages, players, setPlayers, selectedUser, setSelectedUser, currentPage, setCurrentPage, currentTab, setCurrentTab, notices, setNotices}
+            clientStates
         );
         window.client = client;
         const handler = new PacketHandler();
@@ -64,8 +66,8 @@ export default function Game() {
     return (
         <main className="w-max-screen h-screen">
             <Toaster />
-            <Page page={currentPage} data={{ 'rooms': rooms, 'inRoom': inRoom, 'gameState': gameState, 'countdown': countdown, 'messages': messages, 'players': players, 'selectedUser': [selectedUser, setSelectedUser], 'question': currentQuestion, 'currentPage': [currentPage, setCurrentPage], 'currentTab': [currentTab, setCurrentTab], 'notices': notices }} />
-            {loaded ? <BottomNavigator state={[currentPage, setCurrentPage]} /> : ''}
+            <Page page={clientStates.currentPage} data={clientStates} />
+            {clientStates.loaded ? <BottomNavigator state={[clientStates.currentPage, clientStates.setCurrentPage]} /> : ''}
         </main>
     );
 }

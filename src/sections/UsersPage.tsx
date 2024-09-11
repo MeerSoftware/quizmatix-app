@@ -8,15 +8,13 @@ import PointStrip from "@/helpers/PointStrip";
 
 export default function UsersPage() {
     const data = useContext(PageContext).data;
-    const [_currentPage, setCurrentPage] = data.currentPage;
-    const [_selectedUser, setSelectedUser] = data.selectedUser;
     const players = data.players;
 
     return (
         <main className="mt-3 mb-[10rem]">
             {players.map((p: any) => {
                 return (
-                    <div className="user grid grid-cols-3 items-center bg-base-200 rounded-xl mx-5 mb-3 cursor-pointer" onClick={() => { setSelectedUser(p); setCurrentPage(Page.USER_PAGE); } } key={p.id}>
+                    <div className="user grid grid-cols-3 items-center bg-base-200 rounded-xl mx-5 mb-3 cursor-pointer" onClick={() => { data.setSelectedUser(p); data.setCurrentPage(Page.USER_PAGE); } } key={p.id}>
                         <div 
                             className="profile-image ms-4 relative" 
                         >

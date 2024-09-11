@@ -9,7 +9,6 @@ import TabNumber from "@/consts/TabNumber";
 export default function MessagesPage() {
     const data = useContext(PageContext).data;
     const [msg, setMsg] = useState<string>("");
-    const [currentTab, setCurrentTab] = data.currentTab;
 
     function onkeydown(event: React.KeyboardEvent<HTMLInputElement>) {
         if (event.key === "Enter") {
@@ -22,7 +21,7 @@ export default function MessagesPage() {
         let all = document.getElementsByClassName("tab");
         Array.prototype.map.call(all, tab => tab.classList.remove('tab-active'));
         event.currentTarget.classList.add('tab-active');
-        setCurrentTab(tabnum);
+        data.setCurrentTab(tabnum);
     }
 
     function onchange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -48,7 +47,7 @@ export default function MessagesPage() {
             </div>
 
             {(() => {
-                switch (currentTab) {
+                switch (data.currentTab) {
                     case TabNumber.CHAT_PAGE:
                         return (
                             <div className="flex flex-col h-full pb-20">

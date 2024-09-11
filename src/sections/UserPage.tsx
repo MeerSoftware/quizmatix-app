@@ -6,8 +6,7 @@ import Image from "next/image";
 
 export default function UserPage() {
     const data = useContext(PageContext).data;
-    const [selectedUser, _setSelectedUser] = data.selectedUser;
-    const user = selectedUser;
+    const user = data.selectedUser;
 
     return (
         <main className="mb-[5rem]">
