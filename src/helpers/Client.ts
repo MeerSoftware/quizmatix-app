@@ -1,5 +1,6 @@
 import Hooks from "@/helpers/Hooks";
 import config from "@/Config";
+import DataInterface from "@/interfaces/DataInterface";
 
 class Client {
     ws: WebSocket;
@@ -9,7 +10,9 @@ class Client {
     closeHooks: Hooks;
     errorHooks: Hooks;
 
-    constructor() {
+    states: DataInterface; // client states
+
+    constructor(states: DataInterface) {
         this.ws = new WebSocket("wss://ratchet.quizmatix.com/wss2/game");
 
         this.ws.onopen = (ev: Event) => {
@@ -32,6 +35,8 @@ class Client {
         this.messageHooks = new Hooks();
         this.closeHooks = new Hooks();
         this.errorHooks = new Hooks();
+
+        this.states = states;
     }
 
     onOpen(event: any): void {

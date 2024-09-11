@@ -12,6 +12,7 @@ import { STARTING_STATE } from "@/consts/StatesConst";
 import DataInterface from "@/interfaces/DataInterface";
 import TabNumber from "@/consts/TabNumber";
 import createInstance from "@/helpers/InstanceCreator";
+import PacketHandler from "@/helpers/PacketHandler";
 
 declare global {
     interface Window {
@@ -34,73 +35,15 @@ export default function Game() {
     const [notices, setNotices] = useState<string[]>([]);
 
     useEffect(() => {
-        const client: Client = createInstance(Client);
+        const client: Client = createInstance(
+            Client,
+            {loaded, setLoaded, rooms, setRooms, inRoom, setInRoom, gameState, _setGameState, countdown, setCountdown, currentQuestion, setCurrentQuestion, messages, setMessages, players, setPlayers, selectedUser, setSelectedUser, currentPage, setCurrentPage, currentTab, setCurrentTab, notices, setNotices}
+        );
         window.client = client;
+        const handler = new PacketHandler();
 
         const handleNotices = (event: MessageEvent<any>) => {
-            const parsed = JSON.parse(event.data);
-
-            switch (parsed.type) {
-                case "error":
-                case "notice":
-                    setNotices(oldNotices => [...oldNotices, parsed["isAlert"] ? parsed["alert_text"] : parsed["msg"].replace("<br>", "\n")]);
-                    break;
-                case "rooms":
-                    setRooms(parsed["rooms"]);
-                    if (!loaded) {
-                        setLoaded(true);
-                    }
-                    break;
-                case "joined-room":
-                    setInRoom(true);
-                    break;
-                case "room-countdown":
-                    const numbers = parsed["html"].match(/\d/g);
-                    setCountdown(
-                        numbers[1] +
-                        numbers[3] +
-                        numbers[5] +
-                        numbers[7]
-                    );
-                    break;
-                case "message":
-                    setMessages(oldMessages => [...oldMessages, parsed]);
-                    break;
-                case "players":
-                    setPlayers(parsed["players"]);
-                    break;
-                case "player":
-                    setPlayers(oldPlayers => [...oldPlayers, parsed["player"]]);
-                    break;
-                case "rmplayer":
-                    setPlayers(oldPlayers => oldPlayers.filter(p => p["id"] !== parsed["id"]));
-                    break;
-                case "gameContent":
-                    const contentType = parsed["contentType"];
-                    if (contentType === "question") {
-                        setCurrentQuestion(
-                            new Question(
-                                parsed["question"]["img"],
-                                parsed["question"]["title"], [
-                                new Answer("A", parsed["question"]["a"]),
-                                new Answer("B", parsed["question"]["b"]),
-                                new Answer("C", parsed["question"]["c"]),
-                                new Answer("D", parsed["question"]["d"])
-                            ])
-                        );
-                    }
-                    break;
-                case "rooms-status":
-                    const roomsData = parsed["rooms"];
-                    setRooms(rooms => {
-                        const newRooms: any = [...rooms];
-                        rooms.forEach((room: DataInterface, index: number) => {
-                            newRooms[index]["status"] = roomsData[index]["status"];
-                        })
-                        return newRooms;
-                    });
-                    break;
-            }
+            handler.handlePacket(event.data);
         }
 
         const onOpen = (_event: any) => {
