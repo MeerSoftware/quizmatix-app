@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useContext } from "react";
 import { PageContext } from "@/sections/Page";
@@ -6,6 +6,11 @@ import Image from "next/image";
 import { STARTING_STATE } from "@/consts/StatesConst";
 import Question from "@/helpers/Question";
 import Answer from "@/helpers/Answer";
+
+/* Parts */
+import LoadingPart from "@/components/LoadingPart";
+import QuestionComingPart from "@/components/QuestionComingPart";
+import StartingPart from "@/components/StartingPart";
 
 export default function GamePage() {
     const data = useContext(PageContext).data;
@@ -30,20 +35,10 @@ export default function GamePage() {
         return jsxRooms;
     }
 
-    if (!data.rooms || data.rooms.length <= 0) return (
-        <main className={"h-full"}>
-            <div className={"flex flex-col justify-center items-center h-full"}>
-                <Image
-                    src={"/Quizmatix.png"}
-                    width={100}
-                    height={100}
-                    className={"mb-5"}
-                    alt={"Logo"}
-                />
-                <span className="loading loading-dots loading-lg"></span>
-            </div>
-        </main>
-    );
+    if (!data.rooms || data.rooms.length <= 0)
+        return (
+            <LoadingPart />
+        );
 
     if (data.inRoom) {
         if (data.question && !data.question.answered) {
@@ -70,23 +65,13 @@ export default function GamePage() {
         }
         else if (data.question && data.question.answered) {
             return (
-                <main className={"h-full"}>
-                    <div className={"flex flex-col justify-center items-center h-full"}>
-                        <div className="font-bold text-2xl">Yeni soru geliyor...</div>
-                        <p className="text-xl">{data.countdown}</p>
-                    </div>
-                </main>
+                <QuestionComingPart data={data} />
             );
         }
 
         if (data.gameState === STARTING_STATE) {
             return (
-                <main className={"h-full"}>
-                    <div className={"flex flex-col justify-center items-center h-full"}>
-                        <div className="font-bold text-2xl">Oyun başlıyor...</div>
-                        <p className="text-xl">{data.countdown}</p>
-                    </div>
-                </main>
+                <StartingPart data={data} />
             );
         }
 

@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
 import { useEffect, useState } from "react";
 import Client from "@/helpers/Client";
 import { Toaster } from "react-hot-toast";
-import BottomNavigator from "@/components/bottomNavigator";
+import BottomNavigator from "@/components/BottomNavigator";
 import Page from "@/sections/Page";
 import PageConst from "@/consts/PageConst";
 import Question from "@/helpers/Question";
