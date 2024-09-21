@@ -1,4 +1,4 @@
-enum States
+enum State
 {
     // currently stuck at this
     STARTING_STATE,
@@ -8,4 +8,4 @@ enum States
     ENDING_STATE
 }
 
-export default States;
+export default State;
