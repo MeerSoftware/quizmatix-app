@@ -26,7 +26,7 @@ export default function Game() {
     [clientStates.loaded, clientStates.setLoaded] = useState<boolean>(false);
     [clientStates.currentPage, clientStates.setCurrentPage] = useState(PageConst.GAME_PAGE);
     [clientStates.rooms, clientStates.setRooms] = useState([]);
-    [clientStates.inRoom, clientStates.setInRoom] = useState(false);
+    [clientStates.inRoom, clientStates.setInRoom] = useState<boolean>(false);
     [clientStates.gameState, clientStates._setGameState] = useState(STARTING_STATE);
     [clientStates.countdown, clientStates.setCountdown] = useState(15);
     [clientStates.currentQuestion, clientStates.setCurrentQuestion] = useState<Question | null>(null);
@@ -67,7 +67,13 @@ export default function Game() {
         <main className="w-max-screen h-screen">
             <Toaster />
             <Page page={clientStates.currentPage} data={clientStates} />
-            {clientStates.loaded ? <BottomNavigator state={[clientStates.currentPage, clientStates.setCurrentPage]} /> : ''}
+            {
+              clientStates.loaded
+                ?
+              <BottomNavigator state={[clientStates.currentPage, clientStates.setCurrentPage]} />
+                :
+              ''
+            }
         </main>
     );
 }
