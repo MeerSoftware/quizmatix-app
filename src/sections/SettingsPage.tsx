@@ -5,7 +5,6 @@ import { PageContext } from "./Page";
 import { useContext } from "react";
 import { useRouter } from "next/navigation";
 import { ThemeSet, ThemeGet } from "@/helpers/Theme";
-import Confetti from "@/components/Confetti";
 
 export default function SettingsPage() {
     const data = useContext(PageContext).data;
@@ -67,9 +66,6 @@ export default function SettingsPage() {
                         Çıkış</button>
                 </div>
             </div>
-
-            <Confetti
-                />
 
             <div className="settings mx-3">
                 <div className="collapse collapse-arrow bg-base-200 mb-3">
@@ -136,7 +132,7 @@ export default function SettingsPage() {
                             </div>
                             <select name="cars" id="cars" className="input p-3 h-auto w-full max-w-xs"
                                 onChange={(e: any) => { ThemeSet(e.target.value) }}>
-                                <option value={ThemeGet()}>{ThemeGet()}</option>
+                                <option value={ThemeGet()}>{ThemeGet().charAt(0).toUpperCase() + ThemeGet().slice(1)}</option>
                                 {themes.map((theme) => (
                                     <option key={theme} value={theme.toLowerCase()}>{theme}</option>
                                 ))}
