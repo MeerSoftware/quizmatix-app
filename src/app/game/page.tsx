@@ -7,7 +7,6 @@ import BottomNavigator from "@/components/BottomNavigator";
 import Page from "@/sections/Page";
 import PageConst from "@/consts/PageConst";
 import Question from "@/helpers/Question";
-import Answer from "@/helpers/Answer";
 import State from "@/consts/State";
 import DataInterface from "@/interfaces/DataInterface";
 import TabNumber from "@/consts/TabNumber";

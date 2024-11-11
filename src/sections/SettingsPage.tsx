@@ -4,13 +4,50 @@ import Image from "next/image";
 import { PageContext } from "./Page";
 import { useContext } from "react";
 import { useRouter } from "next/navigation";
-import { ThemeSet } from "@/helpers/Theme";
+import { ThemeSet, ThemeGet } from "@/helpers/Theme";
+import Confetti from "@/components/Confetti";
 
 export default function SettingsPage() {
     const data = useContext(PageContext).data;
     const players = data.players;
     const me = players.filter((p: any) => p.id == localStorage.getItem('id'))[0];
     const { push } = useRouter();
+    let themes: string[] = [
+        "Light",
+        "Dark",
+        "Cupcake",
+        "Bumblebee",
+        "Emerald",
+        "Corporate",
+        "Synthwave",
+        "Retro",
+        "Cyberpunk",
+        "Valentine",
+        "Halloween",
+        "Garden",
+        "Forest",
+        "Aqua",
+        "Lofi",
+        "Pastel",
+        "Fantasy",
+        "Wireframe",
+        "Black",
+        "Luxury",
+        "Dracula",
+        "Cmyk",
+        "Autumn",
+        "Business",
+        "Acid",
+        "Lemonade",
+        "Night",
+        "Coffee",
+        "Winter",
+        "Dim",
+        "Nord",
+        "Sunset"
+    ];
+
+    themes = themes.filter(t => t != ThemeGet());
 
     return (
         <main className="mb-[5rem]">
@@ -27,13 +64,12 @@ export default function SettingsPage() {
                 <div className="username font-bold text-3xl text-center pt-5 mb-3">{me?.username}</div>
                 <div className="buttons text-center mb-3">
                     <button className="btn btn-error relative" onClick={() => push('/logout')}>
-                        {/* <span className="absolute top-[-5px] right-[-5px] flex h-3 w-3">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
-                </span> */}
                         Çıkış</button>
                 </div>
             </div>
+
+            <Confetti
+                />
 
             <div className="settings mx-3">
                 <div className="collapse collapse-arrow bg-base-200 mb-3">
@@ -99,39 +135,11 @@ export default function SettingsPage() {
                                 <span className="label-text">Tema</span>
                             </div>
                             <select name="cars" id="cars" className="input p-3 h-auto w-full max-w-xs"
-                                onChange={(e: any) => {ThemeSet(e.target.value)}}>
-                                    <option value="light">Aydınlık</option>
-                                    <option value="dark">Karanlık</option>
-                                    <option value="cupcake">Cupcake</option>
-                                    <option value="bumblebee">Bumblebee</option>
-                                    <option value="emerald">Zümrüt</option>
-                                    <option value="corporate">Corporate</option>
-                                    <option value="synthwave">Synthwave</option>
-                                    <option value="retro">Retro</option>
-                                    <option value="cyberpunk">Cyberpunk</option>
-                                    <option value="valentine">Valentine</option>
-                                    <option value="halloween">Halloween</option>
-                                    <option value="garden">Bahçe</option>
-                                    <option value="forest">Forest</option>
-                                    <option value="aqua">Aqua</option>
-                                    <option value="lofi">Lofi</option>
-                                    <option value="pastel">Pastel</option>
-                                    <option value="fantasy">Fantazi</option>
-                                    <option value="wireframe">Wireframe</option>
-                                    <option value="black">Siyah</option>
-                                    <option value="luxury">Luxury</option>
-                                    <option value="dracula">Drakula</option>
-                                    <option value="cmyk">Cmyk</option>
-                                    <option value="autumn">Autumn</option>
-                                    <option value="business">Business</option>
-                                    <option value="acid">Asit</option>
-                                    <option value="lemonade">Limonata</option>
-                                    <option value="night">Gece</option>
-                                    <option value="coffee">Kahve</option>
-                                    <option value="winter">Kış</option>
-                                    <option value="dim">Dim</option>
-                                    <option value="nord">Nord</option>
-                                    <option value="sunset">Sunset</option>
+                                onChange={(e: any) => { ThemeSet(e.target.value) }}>
+                                <option value={ThemeGet()}>{ThemeGet()}</option>
+                                {themes.map((theme) => (
+                                    <option key={theme} value={theme.toLowerCase()}>{theme}</option>
+                                ))}
                             </select>
                         </div>
                     </div>

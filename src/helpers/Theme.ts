@@ -1,8 +1,8 @@
-export function ThemeSet(name: string) {
+export function ThemeSet(name: string): void {
     document.documentElement.dataset.theme = name;
     localStorage.setItem('theme', name);
 }
 
-export function ThemeGet() {
+export function ThemeGet(): string {
     return localStorage.getItem('theme') ?? 'quizmatix';
 }

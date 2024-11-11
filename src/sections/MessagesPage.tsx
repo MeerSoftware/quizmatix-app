@@ -39,7 +39,7 @@ export default function MessagesPage() {
     }
 
     return (
-        <main className="flex flex-col h-full mb-[5rem] justify-between overflow-hidden">
+        <main className="flex flex-col h-full justify-between overflow-hidden">
             <div role="tablist" className="tabs tabs-bordered">
                 <a role="tab" className="tab tab-active" onClick={(e: any) => tabClick(e, TabNumber.CHAT_PAGE)}>Sohbet</a>
                 <a role="tab" className="tab" onClick={(e: any) => tabClick(e, TabNumber.INFO_PAGE)}>Bilgi</a>
@@ -75,9 +75,9 @@ export default function MessagesPage() {
                             <div className="flex flex-col h-full pb-20">
                                 <h1 className={"font-bold text-3xl pt-6 text-center mb-3"}>Bilgi</h1>
                                 <div className="notices h-full overflow-auto">
-                                    {data.notices && data.notices.map((text: string) => {
+                                    {data.notices && data.notices.map((text: string, index: number) => {
                                         return (
-                                            <p className="mb-1">{text}</p>
+                                            <p key={index} className="mb-1">{text}</p>
                                         );
                                     })}
                                 </div>

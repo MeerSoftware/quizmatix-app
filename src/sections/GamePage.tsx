@@ -3,11 +3,7 @@
 import React, { useContext } from "react";
 import { PageContext } from "@/sections/Page";
 import Image from "next/image";
-import { STARTING_STATE } from "@/consts/StatesConst";
-import Question from "@/helpers/Question";
-import Answer from "@/helpers/Answer";
-
-/* Parts */
+import State from "@/consts/State";
 import LoadingPart from "@/components/LoadingPart";
 import QuestionComingPart from "@/components/QuestionComingPart";
 import StartingPart from "@/components/StartingPart";
@@ -19,9 +15,9 @@ export default function GamePage() {
         const jsxRooms: React.JSX.Element[] = [];
         data.rooms.map(function (r: any) {
             jsxRooms.push(
-                <div className="pt-16 card w-full bg-base-100 shadow-xl image-full" key={r["id"]}>
-                    <div className="card-body bg-base-200 rounded-xl">
-                        <h2 className="card-title">{r["name"]}</h2>
+                <div className="mt-16 w-full bg-base-100 shadow-xl image-full" key={r["id"]}>
+                    <div className="p-8 bg-base-200 rounded-xl">
+                        <h2 className="text-2xl font-bold">{r["name"]}</h2>
                         <p className={"text-primary text-start"}>Oyuncular : {Object.keys(r["players"]).length}/{r["maxPlayers"]}</p>
                         <p className={"text-success text-start"}>Giriş Ücreti : {r["price"]} $</p>
                         <p className={"text-warning text-start"}>{r["status"]}</p>
@@ -35,7 +31,7 @@ export default function GamePage() {
         return jsxRooms;
     }
 
-    if (!data.rooms || data.rooms.length <= 0)
+    if (!data.rooms)
         return (
             <LoadingPart />
         );
@@ -69,7 +65,7 @@ export default function GamePage() {
             );
         }
 
-        if (data.gameState === STARTING_STATE) {
+        if (data.gameState === State.STARTING_STATE) {
             return (
                 <StartingPart data={data} />
             );
