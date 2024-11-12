@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Quizmatix</string>
+    <string name="title_activity_main">Quizmatix</string>
+    <string name="package_name">com.meersoftware.quizmatix</string>
+    <string name="custom_url_scheme">com.meersoftware.quizmatix</string>
+</resources>
