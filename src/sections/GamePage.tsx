@@ -1,40 +1,21 @@
 'use client';
 
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { PageContext } from "@/sections/Page";
-import Image from "next/image";
-import State from "@/consts/State";
+import MainPage from "@/sections/game/MainPage";
+import RoomsPage from "@/sections/game/RoomsPage";
+import Leaderboard from "@/sections/game/LeaderboardPage";
 import LoadingPart from "@/components/LoadingPart";
 import QuestionComingPart from "@/components/QuestionComingPart";
 import StartingPart from "@/components/StartingPart";
+import Image from "next/image";
+import State from "@/consts/State";
 
 export default function GamePage() {
     const data = useContext(PageContext).data;
+    const [section, setSection] = useState('main');
 
-    function roomsToJSX() {
-        const jsxRooms: React.JSX.Element[] = [];
-        data.rooms.map(function (r: any) {
-            jsxRooms.push(
-                <div className="mt-16 w-full bg-base-100 shadow-xl image-full" key={r["id"]}>
-                    <div className="p-8 bg-base-200 rounded-xl">
-                        <h2 className="text-2xl font-bold">{r["name"]}</h2>
-                        <p className={"text-primary text-start"}>Oyuncular : {Object.keys(r["players"]).length}/{r["maxPlayers"]}</p>
-                        <p className={"text-success text-start"}>Giriş Ücreti : {r["price"]} $</p>
-                        <p className={"text-warning text-start"}>{r["status"]}</p>
-                        <div className="card-actions justify-end">
-                            <button className="btn btn-primary" onClick={() => { window.client.joinRoom(r["id"]) }}>Yarışmaya Katıl</button>
-                        </div>
-                    </div>
-                </div>
-            );
-        });
-        return jsxRooms;
-    }
-
-    if (!data.rooms)
-        return (
-            <LoadingPart />
-        );
+    if (!data.rooms) return <LoadingPart />;
 
     if (data.inRoom) {
         if (data.question && !data.question.answered) {
@@ -44,33 +25,25 @@ export default function GamePage() {
                         <Image alt="" src={data.question.img} width={200} height={-1} />
                         <h1 className="max-w-80 break-words font-bold text-lg mb-4">{data.question.title}</h1>
                         <ul>
-                            {data.question.answers.map((a: any) => {
-                                return <button className="btn btn-wide mb-2" onClick={() => {
-                                    // answer question
+                            {data.question.answers.map((a: any) => (
+                                <button className="btn btn-wide mb-2" onClick={() => {
                                     window.client.sendPacket({
                                         type: "answer",
                                         answer: a.key
                                     });
                                     data.question.answered = true;
-                                }} key={a.key}>{a.value}</button>;
-                            })}
+                                }} key={a.key}>{a.value}</button>
+                            ))}
                         </ul>
                     </div>
                 </main>
             );
+        } else if (data.question && data.question.answered) {
+            return <QuestionComingPart data={data} />;
         }
-        else if (data.question && data.question.answered) {
-            return (
-                <QuestionComingPart data={data} />
-            );
-        }
-
         if (data.gameState === State.STARTING_STATE) {
-            return (
-                <StartingPart data={data} />
-            );
+            return <StartingPart data={data} />;
         }
-
         return (
             <main className={"h-full"}>
                 <div className={"flex flex-col justify-center items-center h-full"}>
@@ -81,11 +54,13 @@ export default function GamePage() {
     }
 
     return (
-        <main className={"h-full"}>
-            <div>
-                <h1 className={"font-bold text-3xl pt-12 text-center"}>Odalar</h1>
-                {roomsToJSX()}
-            </div>
-        </main>
+        <>
+            {section === 'main' && <MainPage setSection={setSection} />}
+            {section === 'rooms' && <RoomsPage setSection={setSection} data={data} />}
+            {section === 'leaderboard' && <Leaderboard leaderboardData={[{ name: 'Ahmet', score: 1500 },
+            { name: 'Mehmet', score: 1400 },
+            { name: 'Ayşe', score: 1300 },]} />}  {/* Pass leaderboardData */}
+            {/* Diğer sayfaları buraya ekleyebilirsiniz */}
+        </>
     );
 };

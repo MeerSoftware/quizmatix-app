@@ -5,6 +5,7 @@ import { useContext, useState } from "react";
 import { PageContext } from "@/sections/Page";
 import PlayerFetch from "@/helpers/PlayerFetch";
 import TabNumber from "@/consts/TabNumber";
+import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 
 export default function MessagesPage() {
     const data = useContext(PageContext).data;
@@ -12,9 +13,13 @@ export default function MessagesPage() {
 
     function onkeydown(event: React.KeyboardEvent<HTMLInputElement>) {
         if (event.key === "Enter") {
-            setMsg("");
-            window.client.sendPacket({ "type": "message", "message": msg, "mtype": "global" });
+            sendMessage();
         }
+    }
+
+    function sendMessage() {
+        setMsg("");
+        window.client.sendPacket({ "type": "message", "message": msg, "mtype": "global" });
     }
 
     function tabClick(event: any, tabnum: TabNumber) {
@@ -32,7 +37,7 @@ export default function MessagesPage() {
         return (
             <main>
                 <div className="flex justify-center items-center h-full">
-                    <span>Mesajlar yükleniyor...</span>
+                    <span>Messages are loading...</span>
                 </div>
             </main>
         );
@@ -50,7 +55,7 @@ export default function MessagesPage() {
                 switch (data.currentTab) {
                     case TabNumber.CHAT_PAGE:
                         return (
-                            <div className="flex flex-col h-full pb-20">
+                            <div className="flex flex-col h-full pb-28"> {/* Added 28px of padding */}
                                 <h1 className={"font-bold text-3xl pt-6 text-center"}>Sohbet</h1>
                                 <div className="messages h-full overflow-auto w-full">
                                     <div className={"chat chat-end chat-start"}></div> {/* tailwindcss hack xd */}
@@ -59,20 +64,23 @@ export default function MessagesPage() {
                                         return <Message key={i} text={m["message"]} author={m["author"]} authorId={m["authorid"]} profilePicture={Player["profile_img"]} />;
                                     })}
                                 </div>
-                                <div className="sticky bottom-0 px-4"> {/* Adjust the bottom value based on your navbar's height */}
+                                <div className="sticky bottom-0 px-4 flex items-center">
                                     <input
                                         type="text"
-                                        placeholder="Mesaj yaz..."
-                                        className="input input-bordered input-primary w-full"
+                                        placeholder="Bir mesaj gönder..."
+                                        className="input input-bordered input-primary w-full mr-2"
                                         value={msg}
                                         onChange={onchange}
                                         onKeyDown={onkeydown} />
+                                    <button className="btn btn-primary" onClick={sendMessage}>
+                                        <PaperAirplaneIcon className="h-6 w-6" />
+                                    </button>
                                 </div>
                             </div>
                         )
                     case TabNumber.INFO_PAGE:
                         return (
-                            <div className="flex flex-col h-full pb-20">
+                            <div className="flex flex-col h-full pb-28"> {/* Added 28px of padding */}
                                 <h1 className={"font-bold text-3xl pt-6 text-center mb-3"}>Bilgi</h1>
                                 <div className="notices h-full overflow-auto">
                                     {data.notices && data.notices.map((text: string, index: number) => {
@@ -85,7 +93,7 @@ export default function MessagesPage() {
                         )
                     case TabNumber.FRIENDS_PAGE:
                         return (
-                            <div className="flex flex-col h-full pb-20">
+                            <div className="flex flex-col h-full pb-28"> {/* Added 28px of padding */}
                                 <h1 className={"font-bold text-3xl pt-6 text-center"}>Arkadaşlar</h1>
                             </div>
                         )

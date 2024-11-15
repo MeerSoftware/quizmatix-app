@@ -11,10 +11,10 @@ export default function UsersPage() {
     const players = data.players;
 
     return (
-        <main className="mt-3 mb-[10rem]">
-            {players.map((p: any) => {
+        <main className="mt-3 mb-28">
+            {players.map((p: any, index: number) => {
                 return (
-                    <div className="user grid grid-cols-3 items-center bg-base-200 rounded-xl mx-5 mb-3 cursor-pointer" onClick={() => { data.setSelectedUser(p); data.setCurrentPage(Page.USER_PAGE); } } key={p.id}>
+                    <div className="user grid grid-cols-3 items-center bg-base-200 rounded-xl mx-5 mb-3 cursor-pointer" onClick={() => { data.setSelectedUser(p); data.setCurrentPage(Page.USER_PAGE); } } key={index}>
                         <div 
                             className="profile-image ms-4 relative" 
                         >

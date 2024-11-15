@@ -54,7 +54,7 @@ export default function SettingsPage() {
                 <div className="profile-image pt-5 h-[calc(100vw-128px)]">
                     <Image
                         className="rounded-full mx-auto"
-                        src="https://quizmatix.com/client/assets/profiles/1_1704400430.gif"
+                        src={`https://quizmatix.com/client/assets/profiles/${me?.profile_img}`}
                         width={window.innerWidth - 128}
                         height={-1}
                         alt=""
