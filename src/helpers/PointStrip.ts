@@ -3,7 +3,7 @@ export default function PointStrip(number: any) {
         Number.
             parseFloat(number)
             .toPrecision(
-                Number.parseInt(number).toString().length+1
+                Number.parseInt(number).toString().length + 1
             )
-        );
+    );
 }

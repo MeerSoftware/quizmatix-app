@@ -13,7 +13,7 @@ class Client {
     states: DataInterface; // client states
 
     constructor(states: DataInterface) {
-        this.ws = new WebSocket("wss://ratchet.quizmatix.com/wss2/game");
+        this.ws = new WebSocket(config.wsAddress);
 
         this.ws.onopen = (ev: Event) => {
             this.onOpen(ev);

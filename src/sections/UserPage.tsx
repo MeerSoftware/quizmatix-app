@@ -35,7 +35,7 @@ export default function UserPage() {
     );
 
     return (
-        <main className="mb-[5rem]">
+        <main className="mb-[5rem] page-container">
             <div className="relative pt-5 mb-5 h-[calc(100vw-128px)] w-full">
                 {isLoaded ? (
                     <div className="ring-primary mx-auto ring-offset-base-100 w-[calc(100vw-128px)] ring rounded-full ring-offset-2">

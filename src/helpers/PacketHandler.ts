@@ -68,6 +68,6 @@ class PacketHandler {
                 break;
         }
     }
-} 
+}
 
 export default PacketHandler;

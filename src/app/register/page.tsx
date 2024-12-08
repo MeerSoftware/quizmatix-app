@@ -6,12 +6,12 @@ import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 export default function Register() {
-    const [username, setUsername] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [repeatPassword, setRepeatPassword] = useState<string>("");
-    const [email, setEmail] = useState<string>("");
+    const [username, setUsername] = useState < string > ("");
+    const [password, setPassword] = useState < string > ("");
+    const [repeatPassword, setRepeatPassword] = useState < string > ("");
+    const [email, setEmail] = useState < string > ("");
     const { push } = useRouter();
-    const [sessionChecked, setSessionChecked] = useState<boolean>(false);
+    const [sessionChecked, setSessionChecked] = useState < boolean > (false);
 
     useEffect(() => {
         if (localStorage.getItem('token')) {

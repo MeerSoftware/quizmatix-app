@@ -1,5 +1,4 @@
-enum State
-{
+enum State {
     // currently stuck at this
     STARTING_STATE,
     // these are to do

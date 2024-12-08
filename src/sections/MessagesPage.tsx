@@ -5,11 +5,11 @@ import { useContext, useState } from "react";
 import { PageContext } from "@/sections/Page";
 import PlayerFetch from "@/helpers/PlayerFetch";
 import TabNumber from "@/consts/TabNumber";
-import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
+import { PaperAirplaneIcon } from '@heroicons/react/outline';
 
 export default function MessagesPage() {
     const data = useContext(PageContext).data;
-    const [msg, setMsg] = useState<string>("");
+    const [msg, setMsg] = useState < string > ("");
 
     function onkeydown(event: React.KeyboardEvent<HTMLInputElement>) {
         if (event.key === "Enter") {

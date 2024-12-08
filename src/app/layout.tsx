@@ -6,19 +6,19 @@ import ThemeLoader from "@/components/ThemeLoader";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Quizmatix",
-  description: "Türkiye'nin çevrim içi bilgi yarışması!",
+    title: "Quizmatix",
+    description: "Türkiye'nin çevrim içi bilgi yarışması!",
 };
 
 export default function RootLayout({
-  children,
+    children,
 }: Readonly<{
-  children: React.ReactNode;
+    children: React.ReactNode;
 }>) {
-  return (
-    <html lang="tr">
-      <body className={inter.className}>{children}</body>
-      <ThemeLoader></ThemeLoader>
-    </html>
-  );
+    return (
+        <html lang="tr">
+            <body className={inter.className}>{children}</body>
+            <ThemeLoader></ThemeLoader>
+        </html>
+    );
 }
